@@ -17,53 +17,57 @@
       
       <div class="tab-content">
         <div id="signup">   
-          <h1>Sign Up for Free</h1>
+          <h1>Parent Signup</h1>
           
-          <form action="/" method="post">
+          <form action="signup.php" method="POST">
           
           <div class="top-row">
             <div class="field-wrap">
               <label>
                 First Name<span class="req">*</span>
               </label>
-              <input type="text" required autocomplete="off" />
+              <input type="text" name="first" required autocomplete="off" />
             </div>
         
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
               </label>
-              <input type="text"required autocomplete="off"/>
+              <input type="text" name="last" required autocomplete="off"/>
             </div>
           </div>
+
+          <div class="field-wrap">
+              <label>
+                Phone Number<span class="req">*</span>
+              </label>
+              <input type="phone" name="phone" required autocomplete="off"/>
+            </div>
 
           <div class="field-wrap">
             <label>
               Username<span class="req">*</span>
             </label>
-            <input type="username"required autocomplete="off"/>
+            <input type="username" name="username" required autocomplete="off"/>
           </div>
 
           
-          <div class="field-wrap">
+          <!-- <div class="field-wrap">
             <label>
               
             </br></br>User Type<span class="req">*</span>
             </label>
-            <select class="select-css" name="country" >
+            <select class="select-css" name="type" >
                 <option value="P">Parent</option>
                 <option value="D">Dependent</option>
             </select>
-          </div>
-
-          <p> </br>
-        </p>
+          </div> -->
           
           <div class="field-wrap">
             <label>
               Set A Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input type="password" name="password" required autocomplete="off"/>
           </div>
 
           <div class="field-wrap">
@@ -82,22 +86,22 @@
         </div>
         
         <div id="login">   
-          <h1>Welcome Back!</h1>
+          <h1>Parent/Dependent Login</h1>
           
-          <form action="/" method="post">
+          <form action="login.php" method="POST">
           
             <div class="field-wrap">
             <label>
               Username<span class="req">*</span>
             </label>
-            <input type="username"required autocomplete="off"/>
+            <input type="username" name="username" required autocomplete="off"/>
           </div>
           
           <div class="field-wrap">
             <label>
               Password<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input type="password" name="password" required autocomplete="off"/>
           </div>
           
           <!-- <p class="forgot"><a href="#">Forgot Password?</a></p> -->

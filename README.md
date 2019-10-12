@@ -1,2 +1,0 @@
-# hacknc
-Big Baller Hacksss
