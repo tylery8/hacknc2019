@@ -22,6 +22,8 @@
     return mysqli_fetch_array($result);
   }
 
+//   comment
+
   if(!isset($_GET['user_id'])){
 
  ?>
