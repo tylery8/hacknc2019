@@ -142,23 +142,40 @@
             <div class="row">
                 <div class="col-lg-6" align="center">
                     <div class="section-title" style="align-content:center">
-                        <h4 class="title" style="text-align: center">Request</h4>
-                        <p class="text" style="text-align: center">Here are all of the requests your children have made.</p>
+                        <h4 class="title" style="text-align: center">Requests</h4>
+                        <p class="text" style="text-align: center">Below are all your requests for funds.</p>
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
 
-            
+
+            <?php 
+
+                //loop through all dependents
+                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+                $sql ="SELECT * FROM request WHERE parent_u_name = '$_SESSION[username]' ";
+
+                $result = mysqli_query($conn, $sql);
+                $numRows = mysqli_num_rows($result);
+                
+
+                for ($x = 0; $x < $numRows; $x++) {
+
+                    $row = mysqli_fetch_array($result);
+                    $user_row = getUserRow($row['dependent_u_name']);
+                    
+
+            ?>
 
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 col-sm-10">
                     <div class="single-pricing mt-40">
                         <div class="pricing text-center" style="z-index: 99;">
-                            <h5 class="sub-title" style="z-index: 99;">***NAME***</h5>
+                            <h5 class="sub-title" style="z-index: 99;"><?php echo $user_row['first']. " ". $user_row['last'];?></h5>
                         </br>
-                            <h5 class="sub-title" style="z-index: 99;"> ***$Request Amount***</h5>
+                            <h5 class="sub-title" style="z-index: 99;"> <?php echo $row['amount'];?></h5>
                         </br>
-                            <h5 class="sub-title" style="z-index: 99;">***STORE FOR REQUEST***</h5>
+                            <h5 class="sub-title" style="z-index: 99;"><?php echo $row['stores'];?></h5>
                         </div>
                         <div class="pricing-list">
                             
@@ -172,6 +189,10 @@
                     </div> <!-- single pricing -->
                 </div>
             </div> <!-- row -->
+
+            <?php
+                }
+            ?>
 
 
 
@@ -233,7 +254,7 @@
 
                                     for($i = 0; $i < $num_fund_rows; $i++){
                                         $cur_fund = mysqli_fetch_array($fund_rows);
-                                        echo '<li><i class="lni-check-mark-circle" style="z-index: 99;"></i>'. $cur_fund['name'] .': $'. $cur_fund['amount'] .'</li>';
+                                        echo '<li><i class="lni-check-mark-circle" style="z-index: 99;"></i>'. $cur_fund['fund_name'] .': $'. $cur_fund['amount'] .'</li>';
                                     }
                                 ?>
                                 <!-- <li><i class="lni-check-mark-circle" style="z-index: 99;"></i> Carefully crafted components</li>
