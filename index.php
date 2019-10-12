@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Sign-Up/Login Form</title>
+  <title>Safe Wallet</title>
   <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link rel="stylesheet" href="./style.css">
 </head>
@@ -39,10 +39,25 @@
 
           <div class="field-wrap">
             <label>
-              Email Address<span class="req">*</span>
+              Username<span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off"/>
+            <input type="username"required autocomplete="off"/>
           </div>
+
+          
+          <div class="field-wrap">
+            <label>
+              
+            </br></br>User Type<span class="req">*</span>
+            </label>
+            <select class="select-css" name="country" >
+                <option value="P">Parent</option>
+                <option value="D">Dependent</option>
+            </select>
+          </div>
+
+          <p> </br>
+        </p>
           
           <div class="field-wrap">
             <label>
@@ -50,6 +65,15 @@
             </label>
             <input type="password"required autocomplete="off"/>
           </div>
+
+          <div class="field-wrap">
+            <label>
+              Re-type your Password<span class="req">*</span>
+            </label>
+            <input type="password" name="re_password" required autocomplete="off"/>
+          </div>
+
+          
           
           <button type="submit" class="button button-block"/>Get Started</button>
           
@@ -64,9 +88,9 @@
           
             <div class="field-wrap">
             <label>
-              Email Address<span class="req">*</span>
+              Username<span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off"/>
+            <input type="username"required autocomplete="off"/>
           </div>
           
           <div class="field-wrap">
@@ -76,7 +100,7 @@
             <input type="password"required autocomplete="off"/>
           </div>
           
-          <p class="forgot"><a href="#">Forgot Password?</a></p>
+          <!-- <p class="forgot"><a href="#">Forgot Password?</a></p> -->
           
           <button class="button button-block"/>Log In</button>
           
