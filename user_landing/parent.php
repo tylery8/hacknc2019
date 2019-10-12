@@ -1,6 +1,41 @@
 <!-- //MY FILE -->
 <?php
   session_start();
+
+  //get user row from dependent username
+  function getUserRow($d_username){
+    $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+    $sql ="SELECT * FROM users WHERE username = '$d_username' ";
+
+    $result = mysqli_query($conn, $sql);
+    return mysqli_fetch_array($result);
+  }
+
+  //get balance from dependent username
+  function getBalance($d_username){
+    $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+    $sql ="SELECT * FROM fund WHERE dependent_u_name = '$d_username' ";
+
+    $result = mysqli_query($conn, $sql);
+    $numRows = mysqli_num_rows($result);
+    $balance = 0;
+
+    for ($x = 0; $x < $numRows; $x++) {
+        $row = mysqli_fetch_array($result);
+        $balance += $row['amount'];
+    }
+    return $balance;
+
+  }
+
+  function getFundRows($d_username){
+    $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+    $sql ="SELECT * FROM fund WHERE dependent_u_name = '$d_username' ";
+
+    $result = mysqli_query($conn, $sql);
+    return $result;
+  }
+
 ?>
 
 <!doctype html>
@@ -85,7 +120,7 @@
                             <h3 class="header-title">Welcome <?php echo "{$_SESSION['first']}" ?></h3>
                             <p class="text">Here you can create your child's account, keep an eye on their spending, or add funds to you childs account</p>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">ADD CHILD</a></li>
+                                <li><a class="main-btn btn-one" rel="nofollow" href="add_dependent.html">ADD CHILD</a></li>
                                 
                             </ul>
                         </div> <!-- header content -->
@@ -113,23 +148,7 @@
                 </div>
             </div> <!-- row -->
 
-            <?php 
-
-                //loop through all dependents
-                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
-                $sql ="SELECT * FROM dependents WHERE parent_u_name = '$_SESSION[username]' ";
-
-                $result = mysqli_query($conn, $sql);
-                $numRows = mysqli_num_rows($result);
-                //see if there are any contests under this user
-                if($numRows > 0){
-                    echo "<p>You have created <b>". $numRows. "</b> challenges. To create a new contest, click below! </br></a>.</p>";
-                }
-                else{
-                    echo "<p>You have not yet created a contest. Create a new contest to gain access to our resources! </br></a>.</p>";
-                }
-
-            ?>
+            
 
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 col-sm-10">
@@ -167,37 +186,81 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <div class="section-title text-center pb-10">
-                        <h4 class="title">My Children</h4>
-                        <p class="text">Helping you teach your children financial literacy by setting budgets for them</p>
+                        <h4 class="title">My Dependents</h4>
+                        </br>
+                        <!-- <p class="text">Helping you teach your children financial literacy by setting budgets for them</p> -->
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
+
+            <?php 
+
+                //loop through all dependents
+                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+                $sql ="SELECT * FROM dependents WHERE parent_u_name = '$_SESSION[username]' ";
+
+                $result = mysqli_query($conn, $sql);
+                $numRows = mysqli_num_rows($result);
+                //see if there are any contests under this user
+                if($numRows > 0){
+                    echo "<p class=\"text\" align=\"center\">You have <b>". $numRows. "</b> dependent(s). To add a new dependent, click the button above! </br></a>.</p>";
+                }
+                else{
+                    echo "<p class=\"text\" align=\"center\">You have no dependents registered.</br></a>.</p>";
+                }
+
+                for ($x = 0; $x < $numRows; $x++) {
+
+                    $row = mysqli_fetch_array($result);
+                    $user_row = getUserRow($row['username']);
+                    
+
+            ?>
+
+
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
-                            <h5 class="sub-title">***NAME***</h5>
-                            <span class="price"> ***$Current Balance***</span>
+                            <h5 class="sub-title"><?php echo $user_row['first']. " ". $user_row['last']; ?></h5>
+                            <span class="price"> <?php echo "$".getBalance($row['username']); ?></span>
                         </div>
                         <div class="pricing-list">
                             <ul>
-                                <li><i class="lni-check-mark-circle" style="z-index: 99;"></i> Carefully crafted components</li>
+                                <?php
+                                    $fund_rows = getFundRows($row['username']);
+                                    $num_fund_rows = mysqli_num_rows($fund_rows);
+
+                                    for($i = 0; $i < $num_fund_rows; $i++){
+                                        $cur_fund = mysqli_fetch_array($fund_rows);
+                                        echo '<li><i class="lni-check-mark-circle" style="z-index: 99;"></i>'. $cur_fund['name'] .': $'. $cur_fund['amount'] .'</li>';
+                                    }
+                                ?>
+                                <!-- <li><i class="lni-check-mark-circle" style="z-index: 99;"></i> Carefully crafted components</li>
                                 <li><i class="lni-check-mark-circle" style="z-index: 99;"></i> Amazing page examples</li>
                                 <li><i class="lni-check-mark-circle" style="z-index: 99;"></i> Super friendly support team</li>
-                                <li><i class="lni-check-mark-circle" style="z-index: 999;"></i> Awesome Support</li>
+                                <li><i class="lni-check-mark-circle" style="z-index: 999;"></i> Awesome Support</li> -->
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
-                            <a class="main-btn" href="#">ADD FUNDS</a>
+                            <a class="main-btn" href="#">MANAGE</a>
                         </div>
                         <div class="buttom-shape">
                             <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 112.35"><defs><style>.color-1{fill:#2bdbdc;isolation:isolate;}.cls-1{opacity:0.1;}.cls-2{opacity:0.2;}.cls-3{opacity:0.4;}.cls-4{opacity:0.6;}</style></defs><title>bottom-part1</title><g id="bottom-part"><g id="Group_747" data-name="Group 747"><path id="Path_294" data-name="Path 294" class="cls-1 color-1" d="M0,24.21c120-55.74,214.32,2.57,267,0S349.18,7.4,349.18,7.4V82.35H0Z" transform="translate(0 0)"/><path id="Path_297" data-name="Path 297" class="cls-2 color-1" d="M350,34.21c-120-55.74-214.32,2.57-267,0S.82,17.4.82,17.4V92.35H350Z" transform="translate(0 0)"/><path id="Path_296" data-name="Path 296" class="cls-3 color-1" d="M0,44.21c120-55.74,214.32,2.57,267,0S349.18,27.4,349.18,27.4v74.95H0Z" transform="translate(0 0)"/><path id="Path_295" data-name="Path 295" class="cls-4 color-1" d="M349.17,54.21c-120-55.74-214.32,2.57-267,0S0,37.4,0,37.4v74.95H349.17Z" transform="translate(0 0)"/></g></g></svg>
                         </div>
                     </div> <!-- single pricing -->
                 </div>
+
+                
                 
                 
             </div> <!-- row -->
+
+            <?php
+
+
+                }
+            ?>
         </div> <!-- conteiner -->
     </section>
 
