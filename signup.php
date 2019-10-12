@@ -25,7 +25,7 @@ $conn = new mysqli('localhost', 'root', '', 'registration_storage');
   
 
   if($password != $re_password){
-    echo '<script> alert("Your passwords do not match"); window.location.href=\'index.php\'; </script>';
+    echo '<script> alert("Your passwords do not match"); window.location.href=\'index.html\'; </script>';
     exit();
   }
 
@@ -59,12 +59,6 @@ $conn = new mysqli('localhost', 'root', '', 'registration_storage');
     
     echo " signup succesful!";
 
-    // if($type == "P"){
-    //   header("Location: user_landing/parent.php");
-    //   exit();
-    // }
-    // else{
-    //     header("Location: user_landing/dependent.php");
-    //     exit();
-    // }
+    header("Location: user_landing/parent.php");
+
 

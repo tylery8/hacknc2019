@@ -1,3 +1,8 @@
+<!-- //MY FILE -->
+<?php
+  session_start();
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -62,7 +67,7 @@
                                         <a class="page-scroll" href="#pricing">CHILDREN</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#contact" style="color: red">LOGOUT</a>
+                                        <a class="page-scroll" href="logout.php" style="color: red">LOGOUT</a>
                                     </li>
                                 </ul>
                             </div>
@@ -77,7 +82,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h3 class="header-title">My Dashboard</h3>
+                            <h3 class="header-title">Welcome <?php echo "{$_SESSION['first']}" ?></h3>
                             <p class="text">Here you can create your child's account, keep an eye on their spending, or add funds to you childs account</p>
                             <ul class="header-btn">
                                 <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">ADD CHILD</a></li>
@@ -100,13 +105,32 @@
     <section id="service" class="services-area">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-title pb-10">
+                <div class="col-lg-6" align="center">
+                    <div class="section-title" style="align-content:center">
                         <h4 class="title" style="text-align: center">Request</h4>
                         <p class="text" style="text-align: center">Here are all of the requests your children have made.</p>
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
+
+            <?php 
+
+                //loop through all dependents
+                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+                $sql ="SELECT * FROM dependents WHERE parent_u_name = '$_SESSION[username]' ";
+
+                $result = mysqli_query($conn, $sql);
+                $numRows = mysqli_num_rows($result);
+                //see if there are any contests under this user
+                if($numRows > 0){
+                    echo "<p>You have created <b>". $numRows. "</b> challenges. To create a new contest, click below! </br></a>.</p>";
+                }
+                else{
+                    echo "<p>You have not yet created a contest. Create a new contest to gain access to our resources! </br></a>.</p>";
+                }
+
+            ?>
+
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 col-sm-10">
                     <div class="single-pricing mt-40">
@@ -129,6 +153,9 @@
                     </div> <!-- single pricing -->
                 </div>
             </div> <!-- row -->
+
+
+
         </div>
     </section>
     <!--====== SERVICES PART ENDS ======-->

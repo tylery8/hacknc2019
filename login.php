@@ -55,16 +55,17 @@ if($conn) {
             $_SESSION['type'] = $row['type'];
             $_SESSION['phone'] = $row['phone'];
            
+            $type = $row['type'];
     
           echo "Welcome ". $username;
         }
     }
 
-    // if($type == "P"){
-    //   header("Location: user_landing/parent.php");
-    //   exit();
-    // }
-    // else{
-    //     header("Location: user_landing/dependent.php");
-    //     exit();
-    // }
+    if($type == "P"){
+      header("Location: user_landing/parent.php");
+      exit();
+    }
+    else{
+        header("Location: user_landing/dependent.php");
+        exit();
+    }
