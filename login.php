@@ -56,7 +56,7 @@ if($conn) {
             $_SESSION['phone'] = $row['phone'];
            
     
-          echo "Login succesful!";
+          echo "Welcome ". $username;
         }
     }
 
