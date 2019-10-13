@@ -18,6 +18,7 @@ class Parent {
 
     addChild(child: Child) {
         this.children[this.children.length] = child;
+        this.updateTables();
     }
 
     removeChild(child: Child) {
@@ -26,6 +27,7 @@ class Parent {
                 this.children.splice(i,1);
             }
         }
+        this.updateTables();
     }
 
     sendFund(child: Child, fund: Fund) {
@@ -34,15 +36,22 @@ class Parent {
 
     receiveRequest(request: Requests) {
         this.requests[this.requests.length] = request;
+        this.updateTables();
     }
 
     approveRequest(index: number) {
         let request: Requests = this.requests[index];
         request.getChild().receiveFund(request.getFund());
         this.requests.splice(index, 1);
+        this.updateTables();
     }
 
     denyRequest(index: number) {
         this.requests.splice(index,1);
+        this.updateTables();
+    }
+
+    updateTables() {
+
     }
 }
