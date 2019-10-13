@@ -275,7 +275,7 @@
                                 <li><i class="lni-check-mark-circle" style="z-index: 999;"></i> Awesome Support</li> -->
                             </ul>
                         </div>
-                        <div class="pricing-btn text-center">
+                        <div class="pricing-btn text-center" style="z-index: 999">
                             <a class="main-btn" href="#">MANAGE</a>
                         </div>
                         <div class="buttom-shape">
