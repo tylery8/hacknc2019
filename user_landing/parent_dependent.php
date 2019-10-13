@@ -68,9 +68,6 @@
     <!--====== Bootstrap css ======-->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
-    <!--====== Line Icons css ======-->
-    <link rel="stylesheet" href="assets/css/LineIcons.css">
-
     <!--====== Magnific Popup css ======-->
     <link rel="stylesheet" href="assets/css/magnific-popup.css">
 
@@ -92,7 +89,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="#">
+                            <a class="navbar-brand" href="/user_landing/parent">
                                 <img src="assets/images/logo.svg" alt="Logo">
                             </a>
 
@@ -347,7 +344,7 @@
 
     <!--====== BACK TO TOP PART START ======-->
 
-    <a class="back-to-top" href="#"><i class="lni-chevron-up"></i></a>
+    <a class="back-to-top" href="#"><i class="lni-chevron-up" style="padding-top: 10px"></i></a>
 
     <!--====== BACK TO TOP PART ENDS ======-->
 
