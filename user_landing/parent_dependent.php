@@ -89,7 +89,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand" href="/user_landing/parent">
+                            <a class="navbar-brand" href="parent.php">
                                 <img src="assets/images/logo.svg" alt="Logo">
                             </a>
 

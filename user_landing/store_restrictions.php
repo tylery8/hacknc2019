@@ -90,7 +90,7 @@
             
 
         
-        <input type="submit" value="Submit Transaction" class="btn">
+        <input type="submit" value="Submit" class="btn">
       </form>
     </div>
   </div>

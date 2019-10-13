@@ -15,4 +15,4 @@
   mysqli_query($conn, $sql);
   echo mysqli_error($conn);
 
-  header("Location: parent.php");
+  header("Location: parent_dependent.php?dependent_u_name=". $dependent_u_name);

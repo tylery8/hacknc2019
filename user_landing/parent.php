@@ -197,7 +197,7 @@
                         </div>
 
                         <div align="center">
-                            <p class="main-btn" href="decline_add_funds.php?request_id=<?php echo $row['id'];?>">DECLINE</p>
+                            <a class="main-btn" href="decline_add_funds.php?request_id=<?php echo $row['id'];?>">DECLINE</a>
                         </div>
 
                     </div> <!-- single pricing -->
