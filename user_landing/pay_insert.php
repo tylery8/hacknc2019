@@ -87,6 +87,9 @@ if (!strpos($banned_stores, $store)) {
 
     }
 
+    $sql ="DELETE FROM fund WHERE amount = '0'";
+    $result = mysqli_query($conn, $sql);
+
 }
 
 ?>
