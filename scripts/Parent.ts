@@ -39,6 +39,7 @@ class Parent {
     approveRequest(index: number) {
         let request: Requests = this.requests[index];
         request.getChild().receiveFund(request.getFund());
+        this.requests.splice(index, 1);
     }
 
     denyRequest(index: number) {
