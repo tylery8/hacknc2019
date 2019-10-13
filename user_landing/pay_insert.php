@@ -25,7 +25,7 @@ $numRows = mysqli_num_rows($result);
 
 if (!strpos($banned_stores, $store)) {
 
-    $best_index = -1;
+    $best_id = -1;
     $best_stores_length = 0;
     $best_stores_amount = 0;
 
@@ -35,19 +35,18 @@ if (!strpos($banned_stores, $store)) {
 
         if (strlen($fund_row['stores']) > 0) {
 
-            if ($amount <= $fund_row['amount'] && strpos($fund_row['stores'], $store) !== false) {
+            if ($amount <= $fund_row['amount'] && (strpos($fund_row['stores'], $store) > 0)) {
 
-                if ($best_index == -1) {
-                    $best_index = $x;
+                if ($best_id == -1) {
+                    $best_id = $fund_row['id'];
                     $best_stores_length = substr_count($fund_row['stores'], '),(');
                     $best_stores_amount = $fund_row['amount'];
                 } else if (substr_count($fund_row['stores'], '),(') < $best_stores_length) {
-                    $best_index = $x;
+                    $best_id = $fund_row['id'];
                     $best_stores_length = substr_count($fund_row['stores'], '),(');
                     $best_stores_amount = $fund_row['amount'];
                 } else if (substr_count($fund_row['stores'], '),(') == $best_stores_length && $fund_row['amount'] < $best_stores_amount) {
-                    $best_index = $x;
-                    $best_stores_length = substr_count($fund_row['stores'], '),(');
+                    $best_id = $fund_row['id'];
                     $best_stores_amount = $fund_row['amount'];
                 }
 
@@ -56,34 +55,37 @@ if (!strpos($banned_stores, $store)) {
         } else {
 
             if ($amount <= $fund_row['amount']) {
-                $best_index = $x;
+                $best_id = $fund_row['id'];
             }
 
         }
 
+        if ($best_id >= 0) {
 
-    }
+            $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+            $sql ="SELECT * FROM fund WHERE id = '$best_id' ";
+            $result = mysqli_query($conn, $sql);
+            $numRows = mysqli_num_rows($result);
+    
+            $fund_row = mysqli_fetch_array($result);
+            $new_amount = $fund_row['amount'] - $amount;
 
-    if ($best_index >= 0) {
+            $sql ="UPDATE fund
+                    SET amount = '$new_amount'
+                    WHERE id = '$fund_row[id]' ";
+            $result = mysqli_query($conn, $sql);
 
-        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
-        $sql ="SELECT * FROM fund WHERE dependent_u_name = '$_SESSION[username]' ";
-        $result = mysqli_query($conn, $sql);
-        $numRows = mysqli_num_rows($result);
+            $new_expense = $fund_row['expenses']."(".$store.","."$amount".")";
 
-        for ($x = 0; $x < $numRows; $x++) {
-            if ($x == $best_index) {
-                $fund_row = mysqli_fetch_array($result);
-                $new_amount = $fund_row['amount'] - $amount;
+            $sql ="UPDATE fund
+                    SET expenses = '$new_expense'
+                    WHERE id = '$fund_row[id]' ";
+            $result = mysqli_query($conn, $sql);
 
-                $sql ="UPDATE fund
-                        SET amount = '$new_amount'
-                        WHERE id = '$fund_row[id]' ";
-                $result = mysqli_query($conn, $sql);
-
-                $approved = true;
-            }
+            $approved = true;
+    
         }
+
 
     }
 
@@ -91,5 +93,6 @@ if (!strpos($banned_stores, $store)) {
     $result = mysqli_query($conn, $sql);
 
 }
+echo $approved;
 
 ?>

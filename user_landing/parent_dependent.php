@@ -212,19 +212,19 @@
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title"><?php echo $row['fund_name'];?></h5>
-                            <span class="price" style="z-index: 999"> ***$Current Balance***</span>
+                            <span class="price" style="z-index: 999"> $<?php echo $row['amount'];?></span>
                         </div>
                         </br>
                         <div align="center" style="z-index: 990;">
                             <div>
                                 <h5 class="sub-title"> Allowed Stores<h5>
-                                <p class="text"> ***All the stores allowed*** </p>
+                                <p class="text"> <?php echo $row['stores'];?> </p>
                             </div>
                             </br>
-                            <div>
-                                <h5 class="sub-title"> Banned Stores<h5>
-                                <p class="text"> ***All the stores allowed*** </p>
-                            </div>
+                            </br>
+                            </br>
+                            </br>
+                            
                         </div>
                         <!-- <div class="pricing-btn text-center">
                             <a class="main-btn" href="#">ADD FUNDS</a>
