@@ -105,10 +105,10 @@
                                         <a class="page-scroll" href="#home">HOME</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#service">REQUESTS</a>
+                                        <a class="page-scroll" href="#service">SUMMARY</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#pricing">CHILDREN</a>
+                                        <a class="page-scroll" href="#pricing">FUNDS</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="page-scroll" href="logout.php" style="color: red">LOGOUT</a>
