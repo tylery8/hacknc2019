@@ -51,7 +51,11 @@ class Parent {
         this.updateTables();
     }
 
-    updateTables() {
+    notify(child: Child, store: string) {
+        child.addApproved(store);
+    }
 
+    updateTables() {
+        
     }
 }

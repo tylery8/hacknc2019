@@ -26,4 +26,8 @@ class Fund {
         this.expenses[this.expenses.length] = expense;
         this.amount -= expense.getAmount();
     }
+
+    addFund(fund: Fund) {
+        this.amount += fund.getAmount();
+    }
 }
