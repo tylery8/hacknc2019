@@ -146,7 +146,7 @@
 
     <!--====== SERVICES PART START ======-->
 
-    <section id="service" class="services-area">
+    <section id="service" class="services-area" style="padding:15px"> 
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -168,7 +168,7 @@
             </div>  
             </br>
             <div class="row">
-                <h5 class="title"> Expense History<h5>
+                <label><b> Expense History</b><label>
             </div>
             </br>
             <div>
@@ -210,7 +210,7 @@
 
 
             <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="col-lg-6 col-md-10 col-sm-10">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
                             <h5 class="sub-title"><?php echo $row['fund_name'];?></h5>
