@@ -190,7 +190,7 @@ george.pay(new Expense(20, "Target"));
 george.receiveFund(new Fund(40, ["Sex City", "Toys R Us","Target"]));
 tyler.request(50,"Taco Bell");
 vibhu.approveRequest(0);
-console.log(george.pay(new Expense(5, "Dildo World")));
+george.pay(new Expense(5, "Dildo World"));
 console.log(vibhu.getChildren());
 console.log(vibhu.getRequests());
 console.log(tyler.getFunds());
