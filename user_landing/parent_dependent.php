@@ -131,14 +131,12 @@
                             <p class="text">A detailed view of the budget</p>
                             </br>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">ADD FUNDS</a></li> 
+                                <li><a class="main-btn btn-one" rel="nofollow" href="add_to_dependent.php?dependent_u_name=<?php echo $dependent_row['username']; ?>">ADD FUNDS</a></li> 
+                                <li><a class="main-btn btn-one" rel="nofollow" href="store_restrictions.php?dependent_u_name=<?php echo $dependent_row['username']; ?>">EDIT STORE RESTRICTIONS</a></li>
+
                             </ul>
                             </br>
-                            <!-- <p class="text" style="text-align: center">Edit Account Settings</p> -->
-                            <ul class="header-btn">
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT APPROVED STORES</a></li>
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT BANNED STORES</a></li> 
-                            </ul>
+                            
                             
                         </div>
                     </div>
@@ -158,7 +156,7 @@
     <section id="service" class="services-area">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="section-title pb-10">
                         <h4 class="title" style="text-align: center">$<?php echo getBalance($user_row['username']); ?></h4>
                         <p class="sub-title" style="text-align: center">Total Balance</p>
@@ -166,13 +164,49 @@
                 </div>
             </div>
             </br>
+            </br>
+            <div class="row">
+                <div class="col-lg-6" align="center">
+                    <label><b>Banned Stores</b></label>
+                    <p><?php echo $dependent_row['banned_stores'];?></p>
+                </div>
+                </br>
+                </br>
+                <div class="col-lg-6" align="center">
+                    <label><b>Allowed Stores</b></label>
+                    <p><?php echo $dependent_row['approved_stores'];?></p>
+                </div>
+            </div>  
+            </br>
             <div class="row">
                 <h5 class="title"> Expense History<h5>
             </div>
             </br>
-            <div>
-                <p class="text"> ***All the transactions*** </p>
+            
+
+            <?php
+                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+                $sql ="SELECT * FROM fund WHERE dependent_u_name = '$dependent_row[username]' ";
+
+                $result = mysqli_query($conn, $sql);
+                $numRows = mysqli_num_rows($result);
+                
+
+                for ($x = 0; $x < $numRows; $x++) {
+
+                    $fund_row = mysqli_fetch_array($result);
+                    // $user_row = getDependentRow($row['dependent_u_name']);
+                    
+            ?>
+
+            <div class="col-lg-6">
+                <p class="text"> <?php echo "<b>". $fund_row['fund_name']. "</b>: ". $fund_row['expenses']; ?> </p>
             </div> <!-- row -->
+
+            <?php
+                }
+            ?>
+
         </div>
     </section>
     <!--====== SERVICES PART ENDS ======-->

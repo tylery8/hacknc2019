@@ -130,7 +130,7 @@
                             <p class="text">You can keep an eye on your spending and request money from your guardian</p>
                             <ul class="header-btn">
                                 <li><a class="main-btn btn-one" rel="nofollow" href="pay.php">PAY</a></li>  
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">REQUEST FUNDS</a></li>  
+                                <li><a class="main-btn btn-one" rel="nofollow" href="request_fund.php">REQUEST FUNDS</a></li>  
                             </ul>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
     <section id="service" class="services-area" style="padding:15px"> 
         <div class="container">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="section-title pb-10">
                         <h4 class="title" style="text-align: center">$<?php echo getBalance($_SESSION['username']);?></h4>
                         <p class="sub-title" style="text-align: center">Total Balance</p>
@@ -161,14 +161,14 @@
                 $user_row = getDependentRow($_SESSION['username']);
             ?>
 
-            <div >
-                <div class="column col-50">
+            <div class="row">
+                <div class="col-lg-6" align="center">
                     <label><b>Banned Stores</b></label>
                     <p><?php echo $user_row['banned_stores'];?></p>
                 </div>
                 </br>
                 </br>
-                <div class="column col-50">
+                <div class="col-lg-6" align="center">
                     <label><b>Allowed Stores</b></label>
                     <p><?php echo $user_row['approved_stores'];?></p>
                 </div>
@@ -194,7 +194,7 @@
                     
             ?>
 
-            <div>
+            <div class="col-lg-6">
                 <p class="text"> <?php echo "<b>". $fund_row['fund_name']. "</b>: ". $fund_row['expenses']; ?> </p>
             </div> <!-- row -->
 

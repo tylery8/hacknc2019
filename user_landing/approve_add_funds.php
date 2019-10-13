@@ -21,11 +21,11 @@
   //add fund to the account
 
   $sql = "INSERT INTO fund (fund_name, dependent_u_name, amount, stores) VALUES ('$_POST[fund_name]', 
-  '$request_row[dependent_u_name]', '$request_row[amount]', '$request_row[stores]')";
+  '$request_row[dependent_u_name]', '$$_POST[amount]', '$_POST[stores]')";
   mysqli_query($conn, $sql);
 
   //delete request
   $sql = "DELETE FROM request WHERE id = '$id' ";
   mysqli_query($conn, $sql);
 
-  header("Location: parent.php");
+  // header("Location: parent.php");
