@@ -1,14 +1,23 @@
 <?php
   session_start();
 
+  function getUserRow($d_username){
+    $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+    $sql ="SELECT * FROM users WHERE username = '$d_username' ";
+
+    $result = mysqli_query($conn, $sql);
+    return mysqli_fetch_array($result);
+  }
+
   $id = $_GET['request_id'];
   
   $conn = new mysqli('localhost', 'root', '', 'registration_storage');
   $sql ="SELECT * FROM request WHERE id = '$id' ";
   
-  $request = mysqli_query($conn, $sql);
+  $result = mysqli_query($conn, $sql);
   $request_row = mysqli_fetch_array($result);
-  echo $request_row['dependent_u_name'];
+  $user_row = getUserRow($request_row['dependent_u_name']);
+//   echo $user_row['first'];
 
 
 ?>
@@ -122,19 +131,56 @@
     }
     }
 </style>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
 </head>
 <body>
 
-<h2>Add Funds to **user**</h2>
-<p>Resize the browser window to see the effect. When the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other.</p>
+<h2>Add Funds to <?php echo $user_row['first']. " ". $user_row['last'];?></h2>
+<!-- <p>Resize the browser window to see the effect. When the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other.</p> -->
 <div class="row">
   <div class="col-75">
+    <!-- DISPLAY AMOUNT AND ALLOWED STORES -->
+    <table>
+  <tr>
+    <th>Amount</th>
+    <th>Allowed Stores</th>
+  </tr>
+  <tr>
+    <td>$<?php echo $request_row['amount'];?></td>
+    <td><?php echo $request_row['stores'];?></td>
+  </tr>
+</table>
+
+  </div>
+  
+  <div class="col-75">
     <div class="container">
-      <form action="/action_page.php">
+      <form action="approve_add_funds.php?request_id=<?php echo $id;?>" method ="POST">
       
+      <label><b>Fund Name </b></label>
+      <input type="text" id="fund_name" name="fund_name" placeholder="Entertainment">
+              
         <div class="row">
           <div class="col-50">
             <h3>Billing Address</h3>
+            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
             <label for="fname"><i class="fa fa-user"></i> Full Name</label>
             <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
             <label for="email"><i class="fa fa-envelope"></i> Email</label>
@@ -149,6 +195,7 @@
                 <label for="state">State</label>
                 <input type="text" id="state" name="state" placeholder="NY">
               </div>
+              
               <div class="col-50">
                 <label for="zip">Zip</label>
                 <input type="text" id="zip" name="zip" placeholder="10001">

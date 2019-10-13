@@ -85,7 +85,7 @@
                                 <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">ADD FUNDS</a></li> 
                             </ul>
                             </br>
-                            <p class="text" style="text-align: center">Edit Account Settings</p>
+                            <!-- <p class="text" style="text-align: center">Edit Account Settings</p> -->
                             <ul class="header-btn">
                                 <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT APPROVED STORES</a></li>
                                 <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT BANNED STORES</a></li> 
