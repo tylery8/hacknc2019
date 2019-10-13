@@ -306,7 +306,8 @@
     
 
 
-    
+    <a class="back-to-top" href="#"><i class="lni-chevron-up" style="padding-top: 10px"></i></a>
+
     <!--====== FOOTER PART START ======-->
 
     <footer id="footer" class="footer-area">
