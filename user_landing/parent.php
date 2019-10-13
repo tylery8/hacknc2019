@@ -276,7 +276,7 @@
                             </ul>
                         </div>
                         <div class="pricing-btn text-center">
-                            <a class="main-btn" href="#">MANAGE</a>
+                            <a class="main-btn" href="parent_dependent?dependent_u_name=<?php echo $user_row['username'];?>">MANAGE</a>
                         </div>
                         </br>
                         </br>

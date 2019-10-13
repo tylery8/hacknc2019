@@ -10,7 +10,7 @@ function getDependentRow($d_username){
 }
 $dependent_row = getDependentRow($_SESSION['username']);
 
-
+$approved = false;
 $amount = $_POST['amount'];
 $store = $_POST['store'];
 $banned_stores = $dependent_row['banned_stores'];
@@ -23,13 +23,70 @@ $sql ="SELECT * FROM fund WHERE dependent_u_name = '$_SESSION[username]' ";
 $result = mysqli_query($conn, $sql);
 $numRows = mysqli_num_rows($result);
 
+if (!strpos($banned_stores, $store)) {
 
-for ($x = 0; $x < $numRows; $x++) {
+    $best_index = -1;
+    $best_stores_length = 0;
+    $best_stores_amount = 0;
 
-    $fund_row = mysqli_fetch_array($result);
+    for ($x = 0; $x < $numRows; $x++) {
+        $fund_row = mysqli_fetch_array($result);
+        //you can now access elements on the row by using $fund_row['stores'] ['amount'];
 
-    //you can now access elements on the row by using $fund_row['stores'];
+        if (strlen($fund_row['stores']) > 0) {
+
+            if ($amount <= $fund_row['amount'] && strpos($fund_row['stores'], $store) !== false) {
+
+                if ($best_index == -1) {
+                    $best_index = $x;
+                    $best_stores_length = substr_count($fund_row['stores'], '),(');
+                    $best_stores_amount = $fund_row['amount'];
+                } else if (substr_count($fund_row['stores'], '),(') < $best_stores_length) {
+                    $best_index = $x;
+                    $best_stores_length = substr_count($fund_row['stores'], '),(');
+                    $best_stores_amount = $fund_row['amount'];
+                } else if (substr_count($fund_row['stores'], '),(') == $best_stores_length && $fund_row['amount'] < $best_stores_amount) {
+                    $best_index = $x;
+                    $best_stores_length = substr_count($fund_row['stores'], '),(');
+                    $best_stores_amount = $fund_row['amount'];
+                }
+
+            }
+
+        } else {
+
+            if ($amount <= $fund_row['amount']) {
+                $best_index = $x;
+            }
+
+        }
+
+
+    }
+
+    if ($best_index >= 0) {
+
+        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+        $sql ="SELECT * FROM fund WHERE dependent_u_name = '$_SESSION[username]' ";
+        $result = mysqli_query($conn, $sql);
+        $numRows = mysqli_num_rows($result);
+
+        for ($x = 0; $x < $numRows; $x++) {
+            if ($x == $best_index) {
+                $fund_row = mysqli_fetch_array($result);
+                $new_amount = $fund_row['amount'] - $amount;
+
+                $sql ="UPDATE fund
+                        SET amount = '$new_amount'
+                        WHERE id = '$fund_row[id]' ";
+                $result = mysqli_query($conn, $sql);
+
+                $approved = true;
+            }
+        }
+
+    }
 
 }
 
-
+?>

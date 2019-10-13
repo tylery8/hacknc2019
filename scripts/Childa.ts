@@ -93,7 +93,15 @@ class Child {
         }
         this.updateTables();
     }
-
+    removeFundAmount(amount: number) {
+        for (let i = 0; i < this.funds.length; i++) {
+            if (this.funds[i].getAmount() === amount) {
+                this.funds.splice(i,1);
+                i=i-1;
+            }
+        }
+        this.updateTables();
+    }
     pay(expense: Expense) {
         if (this.banned.indexOf(expense.getStore()) >= 0) {
             return false;
@@ -114,15 +122,35 @@ class Child {
         } else {
             let best_fund: Fund[] = [];
             for (let i = 0; i < this.funds.length; i++) {
-                if (this.funds[i].getAmount() >= expense.getAmount() && this.funds[i].getStores().indexOf(expense.getStore()) >= 0) {
+                let totalpossible: number = 0;
+                if (this.funds[i].getStores().indexOf(expense.getStore()) >= 0) {
                     if (best_fund.length === 0) {
                         best_fund[0] = this.funds[i];
+                        totalpossible += this.funds[i].getAmount();
                     }
                     else if (this.funds[i].getStores().length < best_fund[0].getStores().length) {
                         best_fund[0] = this.funds[i];
+                        totalpossible += this.funds[i].getAmount();
+                    }
+                    else if (this.funds[i].getStores().length > best_fund[0].getStores().length) {
+                        totalpossible += this.funds[i].getAmount();
+                    }
+                    else if (this.funds[i].getStores().length === best_fund[0].getStores().length && this.funds[i].getAmount() < best_fund[0].getAmount()) {
+                        totalpossible += this.funds[i].getAmount();
                     }
                     else if (this.funds[i].getStores().length === best_fund[0].getStores().length && this.funds[i].getAmount() >= best_fund[0].getAmount()) {
                         best_fund[0] = this.funds[i];
+                        totalpossible += this.funds[i].getAmount();
+                        if (totalpossible < expense.getAmount()) {
+                            return false
+                        }
+                        if (best_fund[0].getAmount() < expense.getAmount()) {
+                            best_fund[0].addExpense(expense);
+                            let new_Fund: Fund = new Fund(-best_fund[0].getAmount(),best_fund[0].getStores());
+                            expense.addFund(new_Fund);
+                            i=-1;
+                            best_fund=[];
+                        }
                     }
                 }
             }
@@ -130,6 +158,7 @@ class Child {
                 return false;
             }
             best_fund[0].addExpense(expense);
+            this.removeFundAmount(0);
             return true;
         }
     }
