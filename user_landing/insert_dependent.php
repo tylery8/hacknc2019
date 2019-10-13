@@ -16,7 +16,7 @@ $conn = new mysqli('localhost', 'root', '', 'registration_storage');
   $last = mysqli_real_escape_string($conn, $_POST['last']);
   $username = mysqli_real_escape_string($conn, $_POST['username']);
   $type = "D";
-  $payment_type = $_POST['payment_type'];
+  // $payment_type = $_POST['payment_type'];
   $phone = mysqli_real_escape_string($conn, $_POST['phone']);
   $password = mysqli_real_escape_string($conn, $_POST['password']);
   $re_password = mysqli_real_escape_string($conn, $_POST['re_password']);
@@ -49,8 +49,8 @@ $conn = new mysqli('localhost', 'root', '', 'registration_storage');
 
     $parent_u_name = $_SESSION['username'];
     $stores = "";
-    $sql2 = "INSERT INTO dependents (username, parent_u_name, banned_stores, approved_stores, payment_type) VALUES 
-                                    ('$username', '$parent_u_name', '$stores', '$stores', '$payment_type');";
+    $sql2 = "INSERT INTO dependents (username, parent_u_name, banned_stores, approved_stores) VALUES 
+                                    ('$username', '$parent_u_name', '$stores', '$stores');";
 
     mysqli_query($conn, $sql2);
     

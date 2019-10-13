@@ -45,6 +45,64 @@
         return $result;
       }
 
+      function storesStringToDisplay($stores){
+        $stores = substr($stores, 1, strlen($stores)-2);
+        $keywords = preg_split("/[)][,][(]/", $stores);
+        $out = '';
+        
+        for ($e = 0; $e < count($keywords); $e += 1) {
+            $out .= $keywords[$e];
+            if ($e < count($keywords) - 1) {
+                $out .= ", ";
+            }
+        }
+        
+        if ($out == '') {
+            $out = 'Any store';
+        }
+        
+        return $out;
+    }
+    function inputToStoresString($stores){
+        $stores = '(' . $stores . ')';
+        $keywords = preg_split("/[;]+[\s]*/", $stores);
+        $out = '';
+    
+        for ($e = 0; $e < count($keywords); $e += 1) {
+            $out .= $keywords[$e];
+            if ($e < count($keywords) - 1) {
+                $out .= "),(";
+            }
+        }
+        
+        return $out;
+    }
+    function expensesStringToDisplay($expenses){
+        $expenses = substr($expenses, 1, strlen($expenses)-2);
+        
+        $keywords = preg_split("/[,]/", $expenses);
+        $out = '';
+        
+        for ($e = 0; $e < count($keywords); $e += 1) {
+            $out .= $keywords[$e];
+            if ($e < count($keywords) - 1) {
+                $out .= ": $";
+            }
+        }
+        
+        $keywords = preg_split("/[)][(]/", $out);
+        $out = '';
+        
+        for ($e = 0; $e < count($keywords); $e += 1) {
+            $out .= $keywords[$e];
+            if ($e < count($keywords) - 1) {
+                $out .= ", ";
+            }
+        }
+        
+        return $out;
+    }
+
   ?>
 <!doctype html>
 <html lang="en">
@@ -164,13 +222,13 @@
             <div class="row">
                 <div class="col-lg-6" align="center">
                     <label><b>Banned Stores</b></label>
-                    <p><?php echo $user_row['banned_stores'];?></p>
+                    <p><?php echo storesStringToDisplay($user_row['banned_stores']);?></p>
                 </div>
                 </br>
                 </br>
                 <div class="col-lg-6" align="center">
                     <label><b>Allowed Stores</b></label>
-                    <p><?php echo $user_row['approved_stores'];?></p>
+                    <p><?php echo storesStringToDisplay($user_row['approved_stores']);?></p>
                 </div>
             </div>  
             </br>
@@ -195,7 +253,7 @@
             ?>
 
             <div class="col-lg-6">
-                <p class="text"> <?php echo "<b>". $fund_row['fund_name']. "</b>: ". $fund_row['expenses']; ?> </p>
+                <p class="text"> <?php echo "<b>". $fund_row['fund_name']. "</b>: ". expensesStringToDisplay($fund_row['expenses']); ?> </p>
             </div> <!-- row -->
 
             <?php
@@ -249,7 +307,7 @@
                         <div align="center" style="z-index: 990;">
                             <div>
                                 <h5 class="sub-title"> Allowed Stores<h5>
-                                <p class="text"><?php echo $row['stores'];?> </p>
+                                <p class="text"><?php echo storesStringToDisplay($row['stores']);?> </p>
                             </div>
                             
                         </div>

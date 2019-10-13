@@ -30,7 +30,7 @@ if($conn) {
     
 
     if($resultCheck != 1){ //check if user has been taken
-      echo '<script> alert("Error, user not found"); window.location.href=\'index.php\'; </script>';
+      echo '<script> alert("Error, user not found"); window.location.href=\'index.html\'; </script>';
       exit();
     }
 
