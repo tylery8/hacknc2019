@@ -24,7 +24,7 @@
 
     <!--====== Favicon Icon ======-->
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="assets/css/formStyle.css"
+    <link rel="stylesheet" href="assets/css/formStyle.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>

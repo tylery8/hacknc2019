@@ -156,6 +156,16 @@
                     </div> <!-- section title -->
                 </div>
             </div>
+            <div class="row">
+                <div class="column col-50">
+                    <label><b>Amount</b></label>
+                    <p>$<?php echo $request_row['amount'];?></p>
+                </div>
+                <div class="column col-50">
+                    <label><b>Allowed Stores</b></label>
+                    <p><?php echo $request_row['stores'];?></p>
+                </div>
+            </div>  
             </br>
             <div class="row">
                 <h5 class="title"> Expense History<h5>
