@@ -108,7 +108,7 @@
                                         <a class="page-scroll" href="#service">REQUESTS</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#pricing">CHILDREN</a>
+                                        <a class="page-scroll" href="#pricing">DEPENDENTS</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="page-scroll" href="logout.php" style="color: red">LOGOUT</a>
@@ -127,9 +127,9 @@
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
                             <h3 class="header-title">Welcome <?php echo "{$_SESSION['first']}" ?></h3>
-                            <p class="text">Here you can create your child's account, keep an eye on their spending, or add funds to you childs account</p>
+                            <p class="text">Here you can create your dependent's account, keep an eye on their spending, or add funds to you dependent's account</p>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one" rel="nofollow" href="add_dependent.html">ADD CHILD</a></li>
+                                <li><a class="main-btn btn-one" rel="nofollow" href="add_dependent.html">ADD DEPENDENT</a></li>
                                 
                             </ul>
                         </div> <!-- header content -->
