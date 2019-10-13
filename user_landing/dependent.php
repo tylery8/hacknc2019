@@ -105,10 +105,10 @@
                                         <a class="page-scroll" href="#home">HOME</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#service">REQUESTS</a>
+                                        <a class="page-scroll" href="#service">SUMMARY</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#pricing">CHILDREN</a>
+                                        <a class="page-scroll" href="#pricing">FUNDS</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="page-scroll" href="logout.php" style="color: red">LOGOUT</a>
@@ -156,14 +156,21 @@
                     </div> <!-- section title -->
                 </div>
             </div>
-            <div class="row">
+            
+            <?php
+                $user_row = getDependentRow($_SESSION['username']);
+            ?>
+
+            <div >
                 <div class="column col-50">
-                    <label><b>Amount</b></label>
-                    <p>$<?php echo $request_row['amount'];?></p>
+                    <label><b>Banned Stores</b></label>
+                    <p><?php echo $user_row['banned_stores'];?></p>
                 </div>
+                </br>
+                </br>
                 <div class="column col-50">
                     <label><b>Allowed Stores</b></label>
-                    <p><?php echo $request_row['stores'];?></p>
+                    <p><?php echo $user_row['approved_stores'];?></p>
                 </div>
             </div>  
             </br>
@@ -171,9 +178,31 @@
                 <label><b> Expense History</b><label>
             </div>
             </br>
+
+            <?php
+                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+                $sql ="SELECT * FROM fund WHERE dependent_u_name = '$_SESSION[username]' ";
+
+                $result = mysqli_query($conn, $sql);
+                $numRows = mysqli_num_rows($result);
+                
+
+                for ($x = 0; $x < $numRows; $x++) {
+
+                    $fund_row = mysqli_fetch_array($result);
+                    // $user_row = getDependentRow($row['dependent_u_name']);
+                    
+            ?>
+
             <div>
-                <p class="text"> ***All the transactions*** </p>
+                <p class="text"> <?php echo "<b>". $fund_row['fund_name']. "</b>: ". $fund_row['expenses']; ?> </p>
             </div> <!-- row -->
+
+            <?php
+                }
+            ?>
+
+
         </div>
     </section>
     <!--====== SERVICES PART ENDS ======-->
