@@ -1,3 +1,54 @@
+<?php
+    session_start();
+    
+    // echo $dependent_username;
+    function getUserRow($d_username){
+        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+        $sql ="SELECT * FROM users WHERE username = '$d_username' ";
+    
+        $result = mysqli_query($conn, $sql);
+        return mysqli_fetch_array($result);
+    }
+
+      function getDependentRow($d_username){
+        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+        $sql ="SELECT * FROM dependents WHERE username = '$d_username' ";
+    
+        $result = mysqli_query($conn, $sql);
+        return mysqli_fetch_array($result);
+      }
+      
+      //get balance from dependent username
+      function getBalance($d_username){
+        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+        $sql ="SELECT * FROM fund WHERE dependent_u_name = '$d_username' ";
+    
+        $result = mysqli_query($conn, $sql);
+        $numRows = mysqli_num_rows($result);
+        $balance = 0;
+    
+        for ($x = 0; $x < $numRows; $x++) {
+            $row = mysqli_fetch_array($result);
+            $balance += $row['amount'];
+        }
+        return $balance;
+    
+      }
+    
+      function getFundRows($d_username){
+        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+        $sql ="SELECT * FROM fund WHERE dependent_u_name = '$d_username' ";
+    
+        $result = mysqli_query($conn, $sql);
+        return $result;
+      }
+
+      $dependent_username = $_GET['dependent_u_name'];
+
+      $dependent_row = getDependentRow($dependent_username);
+      $user_row = getUserRow($dependent_username);
+      
+?>
 <!doctype html>
 <html lang="en">
 
@@ -9,7 +60,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--====== Title ======-->
-    <title>Safe Wallet</title>
+    <title><?php echo $user_row['first']; ?> - Safe Wallet</title>
 
     <!--====== Favicon Icon ======-->
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
@@ -57,14 +108,12 @@
                                         <a class="page-scroll" href="#home">HOME</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#service">REQUESTS</a>
+                                        <a class="page-scroll" href="#service">OVERVIEW</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="#pricing">CHILDREN</a>
+                                        <a class="page-scroll" href="#pricing">FUNDS</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="page-scroll" href="#contact" style="color: red">LOGOUT</a>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                         </nav> <!-- navbar -->
@@ -78,7 +127,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h3 class="header-title">***CHILD'S*** Dashboard</h3>
+                            <h3 class="header-title"><?php echo $user_row['first']; ?>'s Profile</h3>
                             <p class="text">A detailed view of the budget</p>
                             </br>
                             <ul class="header-btn">
@@ -111,7 +160,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-title pb-10">
-                        <h4 class="title" style="text-align: center">***$Total Balance***</h4>
+                        <h4 class="title" style="text-align: center">$<?php echo getBalance($user_row['username']); ?></h4>
                         <p class="sub-title" style="text-align: center">Total Balance</p>
                     </div> <!-- section title -->
                 </div>
@@ -139,11 +188,30 @@
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
+
+            <?php 
+
+                //loop through all dependents
+                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
+                $sql ="SELECT * FROM fund WHERE dependent_u_name = '$user_row[username]' ";
+
+                $result = mysqli_query($conn, $sql);
+                $numRows = mysqli_num_rows($result);
+                
+
+                for ($x = 0; $x < $numRows; $x++) {
+
+                    $row = mysqli_fetch_array($result);
+                    // $user_row = getDependentRow($row['dependent_u_name']);
+                    
+
+            ?>
+
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
-                            <h5 class="sub-title">***FUND NAME***</h5>
+                            <h5 class="sub-title"><?php echo $row['fund_name'];?></h5>
                             <span class="price" style="z-index: 999"> ***$Current Balance***</span>
                         </div>
                         </br>
@@ -170,6 +238,9 @@
                 
                 
             </div> <!-- row -->
+            <?php
+                }
+            ?>
         </div> <!-- conteiner -->
     </section>
 
