@@ -39,9 +39,10 @@ for ($x = 0; $x < $numRows; $x++) {
         $totalpossible += $fund_row['amount'];
     }
 }
+
 //for loop through each fund
 
-while ($amount>0) {
+while ($amount > 0 && $totalpossible >= $amount) {
 
     $conn = new mysqli('localhost', 'root', '', 'registration_storage');
     $sql ="SELECT * FROM fund WHERE dependent_u_name = '$_SESSION[username]' ";
@@ -89,12 +90,15 @@ while ($amount>0) {
                 $numRows = mysqli_num_rows($result);
         
                 $fund_row = mysqli_fetch_array($result);
+
+                $new_expense = $fund_row['expenses']."(".$store.","."$amount".")";
+
                 if ($fund_row['amount']>=$amount){
                     $new_amount = $fund_row['amount'] - $amount;
-                    $amount=0;
+                    $amount = 0;
                 }
                 else {
-                    $amount = $amount -$fund_row['amount'];
+                    $amount = $amount - $fund_row['amount'];
                     $new_amount = 0;
                 }
                 $sql ="UPDATE fund
@@ -102,12 +106,12 @@ while ($amount>0) {
                         WHERE id = '$fund_row[id]' ";
                 $result = mysqli_query($conn, $sql);
 
-
-                $new_expense = $fund_row['expenses']."(".$store.","."$amount".")";
-
                 $sql ="UPDATE fund
                         SET expenses = '$new_expense'
                         WHERE id = '$fund_row[id]' ";
+                $result = mysqli_query($conn, $sql);
+
+                $sql ="DELETE FROM fund WHERE amount = '0'";
                 $result = mysqli_query($conn, $sql);
 
                 $approved = true;
@@ -118,8 +122,8 @@ while ($amount>0) {
         }
     }
 }
-    $sql ="DELETE FROM fund WHERE amount = '0'";
-    $result = mysqli_query($conn, $sql);
+$sql ="DELETE FROM fund WHERE amount = '0'";
+$result = mysqli_query($conn, $sql);
 
 
 echo $approved;
