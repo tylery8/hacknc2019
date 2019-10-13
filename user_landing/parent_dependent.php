@@ -33,8 +33,8 @@
 <body>
 
     <!--====== HEADER PART START ======-->
-
     
+
     <header class="header-area">
         <div class="navgition navgition-transparent">
             <div class="container">
@@ -78,12 +78,19 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h3 class="header-title">My Dashboard</h3>
-                            <p class="text">You can keep an eye on your spending and request money from your guardian</p>
+                            <h3 class="header-title">***CHILD'S*** Dashboard</h3>
+                            <p class="text">A detailed view of the budget</p>
+                            </br>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">PAY</a></li>  
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">REQUEST FUNDS</a></li>  
+                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">ADD FUNDS</a></li> 
                             </ul>
+                            </br>
+                            <p class="text" style="text-align: center">Edit Account Settings</p>
+                            <ul class="header-btn">
+                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT APPROVED STORES</a></li>
+                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT BANNED STORES</a></li> 
+                            </ul>
+                            
                         </div>
                     </div>
                 </div> <!-- row -->
@@ -92,6 +99,7 @@
                 <img src="assets/images/header-shape.svg" alt="shape">
             </div>
         </div> <!-- header content -->
+
     </header>
 
     <!--====== HEADER PART ENDS ======-->
@@ -144,6 +152,7 @@
                                 <h5 class="sub-title"> Allowed Stores<h5>
                                 <p class="text"> ***All the stores allowed*** </p>
                             </div>
+                            </br>
                             <div>
                                 <h5 class="sub-title"> Banned Stores<h5>
                                 <p class="text"> ***All the stores allowed*** </p>
