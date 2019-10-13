@@ -20,6 +20,15 @@ class Child {
 
     receiveFund(fund: Fund) {
         this.funds[this.funds.length] = fund;
+        this.updateTables();
+    }
+
+    getParent() {
+        return this.parent;
+    }
+
+    getFunds() {
+        return this.funds;
     }
 
     getBanned() {
@@ -50,12 +59,14 @@ class Child {
         this.removeApproved(store);
         this.removeBanned(store);
         this.banned[this.banned.length] = store;
+        this.updateTables();
     }
 
     addApproved(store: string) {
         this.removeApproved(store);
         this.removeBanned(store);
         this.approved[this.approved.length] = store;
+        this.updateTables();
     }
 
     removeBanned(store: string) {
@@ -64,6 +75,7 @@ class Child {
                 this.banned.splice(i,1);
             }
         }
+        this.updateTables();
     }
 
     removeApproved(store: string) {
@@ -72,6 +84,7 @@ class Child {
                 this.approved.splice(i,1);
             }
         }
+        this.updateTables();
     }
 
     pay(expense: Expense) {
@@ -96,6 +109,7 @@ class Child {
         }
 
         best_Fund[0].addExpense(expense);
+        this.updateTables();
         return true;
     }
 
@@ -104,5 +118,9 @@ class Child {
             return fund.getAmount() >= expense.getAmount() && this.banned.indexOf(expense.getStore()) === -1;
         }
         return fund.getAmount() >= expense.getAmount() && fund.getStores().indexOf(expense.getStore()) >= 0;
+    }
+
+    updateTables() {
+
     }
 }
