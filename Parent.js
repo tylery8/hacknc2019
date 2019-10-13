@@ -27,7 +27,8 @@ var Parent = /** @class */ (function () {
     };
     Parent.prototype.approveRequest = function (index) {
         var request = this.requests[index];
-        request.getChild().receiveFund(request.getFund());
+        request.getChild().receiveFund(request.getFund())
+        this.requests.splice(index, 1);;
     };
     Parent.prototype.denyRequest = function (index) {
         this.requests.splice(index, 1);
