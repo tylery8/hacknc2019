@@ -1,51 +1,3 @@
-<?php
-  session_start();
-
-    //get user row from dependent username
-    function getUserRow($d_username){
-        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
-        $sql ="SELECT * FROM users WHERE username = '$d_username' ";
-    
-        $result = mysqli_query($conn, $sql);
-        return mysqli_fetch_array($result);
-      }
-
-      function getDependentRow($d_username){
-        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
-        $sql ="SELECT * FROM dependents WHERE username = '$d_username' ";
-    
-        $result = mysqli_query($conn, $sql);
-        return mysqli_fetch_array($result);
-      }
-
-      
-    
-      //get balance from dependent username
-      function getBalance($d_username){
-        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
-        $sql ="SELECT * FROM fund WHERE dependent_u_name = '$d_username' ";
-    
-        $result = mysqli_query($conn, $sql);
-        $numRows = mysqli_num_rows($result);
-        $balance = 0;
-    
-        for ($x = 0; $x < $numRows; $x++) {
-            $row = mysqli_fetch_array($result);
-            $balance += $row['amount'];
-        }
-        return $balance;
-    
-      }
-    
-      function getFundRows($d_username){
-        $conn = new mysqli('localhost', 'root', '', 'registration_storage');
-        $sql ="SELECT * FROM fund WHERE dependent_u_name = '$d_username' ";
-    
-        $result = mysqli_query($conn, $sql);
-        return $result;
-      }
-
-  ?>
 <!doctype html>
 <html lang="en">
 
@@ -57,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--====== Title ======-->
-    <title><?php echo $_SESSION['first'];?> - Safe Wallet</title>
+    <title>Safe Wallet</title>
 
     <!--====== Favicon Icon ======-->
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
@@ -81,8 +33,8 @@
 <body>
 
     <!--====== HEADER PART START ======-->
-
     
+
     <header class="header-area">
         <div class="navgition navgition-transparent">
             <div class="container">
@@ -111,7 +63,7 @@
                                         <a class="page-scroll" href="#pricing">CHILDREN</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="logout.php" style="color: red">LOGOUT</a>
+                                        <a class="page-scroll" href="#contact" style="color: red">LOGOUT</a>
                                     </li>
                                 </ul>
                             </div>
@@ -126,12 +78,19 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-8 col-lg-10">
                         <div class="header-content text-center">
-                            <h3 class="header-title">Welcome <?php echo $_SESSION['first']; ?></h3>
-                            <p class="text">You can keep an eye on your spending and request money from your guardian</p>
+                            <h3 class="header-title">***CHILD'S*** Dashboard</h3>
+                            <p class="text">A detailed view of the budget</p>
+                            </br>
                             <ul class="header-btn">
-                                <li><a class="main-btn btn-one" rel="nofollow" href="pay.php">PAY</a></li>  
-                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">REQUEST FUNDS</a></li>  
+                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">ADD FUNDS</a></li> 
                             </ul>
+                            </br>
+                            <p class="text" style="text-align: center">Edit Account Settings</p>
+                            <ul class="header-btn">
+                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT APPROVED STORES</a></li>
+                                <li><a class="main-btn btn-one" rel="nofollow" href="https://rebrand.ly/start-ud">EDIT BANNED STORES</a></li> 
+                            </ul>
+                            
                         </div>
                     </div>
                 </div> <!-- row -->
@@ -140,6 +99,7 @@
                 <img src="assets/images/header-shape.svg" alt="shape">
             </div>
         </div> <!-- header content -->
+
     </header>
 
     <!--====== HEADER PART ENDS ======-->
@@ -151,7 +111,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="section-title pb-10">
-                        <h4 class="title" style="text-align: center">$<?php echo getBalance($_SESSION['username']);?></h4>
+                        <h4 class="title" style="text-align: center">***$Total Balance***</h4>
                         <p class="sub-title" style="text-align: center">Total Balance</p>
                     </div> <!-- section title -->
                 </div>
@@ -179,42 +139,23 @@
                     </div> <!-- section title -->
                 </div>
             </div> <!-- row -->
-
-            <?php 
-
-                //loop through all dependents
-                $conn = new mysqli('localhost', 'root', '', 'registration_storage');
-                $sql ="SELECT * FROM fund WHERE dependent_u_name = '$_SESSION[username]' ";
-
-                $result = mysqli_query($conn, $sql);
-                $numRows = mysqli_num_rows($result);
-                
-
-                for ($x = 0; $x < $numRows; $x++) {
-
-                    $row = mysqli_fetch_array($result);
-                    $user_row = getDependentRow($row['dependent_u_name']);
-                    
-
-            ?>
-
-
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-12 col-sm-12">
                     <div class="single-pricing mt-40">
                         <div class="pricing-header text-center">
-                            <h5 class="sub-title"><?php echo $row['fund_name'];?></h5>
-                            <span class="price" style="z-index: 999">$<?php echo getBalance($_SESSION['username']);?></span>
+                            <h5 class="sub-title">***FUND NAME***</h5>
+                            <span class="price" style="z-index: 999"> ***$Current Balance***</span>
                         </div>
                         </br>
                         <div align="center" style="z-index: 990;">
                             <div>
                                 <h5 class="sub-title"> Allowed Stores<h5>
-                                <p class="text"><?php echo $row['stores'];?> </p>
+                                <p class="text"> ***All the stores allowed*** </p>
                             </div>
+                            </br>
                             <div>
                                 <h5 class="sub-title"> Banned Stores<h5>
-                                <p class="text"> <?php echo $user_row['banned_stores'];?> </p>
+                                <p class="text"> ***All the stores allowed*** </p>
                             </div>
                         </div>
                         <!-- <div class="pricing-btn text-center">
@@ -226,10 +167,6 @@
                         </div>
                     </div> <!-- single pricing -->
                 </div>
-
-                <?php
-                    }
-                ?>
                 
                 
             </div> <!-- row -->
