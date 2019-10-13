@@ -19,6 +19,13 @@ class Child {
     }
 
     receiveFund(fund: Fund) {
+        for (let i = 0; i < this.funds.length; i++) {
+            if (this.funds[i].getStores() === fund.getStores()) {
+                this.funds[i].addFund(fund);
+                return;
+            }
+        }
+
         this.funds[this.funds.length] = fund;
         this.updateTables();
     }
@@ -88,36 +95,43 @@ class Child {
     }
 
     pay(expense: Expense) {
-        let best_Fund: Fund[] = [];
-        
-        for (let i = 0; i < this.funds.length; i++) {
-            if (this.acceptableFund(this.funds[i], expense)) {
-                if (best_Fund.length === 0) {
-                    best_Fund[0] = this.funds[i];
-                }
-                else if (this.funds[i].getStores().length < best_Fund[0].getStores().length) {
-                    best_Fund[0] = this.funds[i];
-                }
-                else if (this.funds[i].getStores().length === best_Fund[0].getStores().length && this.funds[i].getAmount() >= best_Fund[0].getAmount()){
-                    best_Fund[0] = this.funds[i];
-                }
-            }
-        }
-
-        if (best_Fund.length === 0) {
+        if (this.banned.indexOf(expense.getStore()) >= 0) {
             return false;
         }
-
-        best_Fund[0].addExpense(expense);
-        this.updateTables();
-        return true;
-    }
-
-    acceptableFund(fund: Fund, expense: Expense) {
-        if (fund.getStores().length === 0) {
-            return fund.getAmount() >= expense.getAmount() && this.banned.indexOf(expense.getStore()) === -1;
+        if (this.approved.indexOf(expense.getStore()) === -1) {
+            this.parent.notify(this, expense.getStore());
+            for (let i = 0; i < this.funds.length; i++) {
+                if (this.funds[i].getStores.length === 0) {
+                    if (this.funds[i].getAmount() < expense.getAmount()) {
+                        return false;
+                    }
+                    this.funds[i].addExpense(expense);
+                    this.updateTables();
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            let best_fund: Fund[] = [];
+            for (let i = 0; i < this.funds.length; i++) {
+                if (this.funds[i].getAmount() >= expense.getAmount() && this.funds[i].getStores().indexOf(expense.getStore()) >= 0) {
+                    if (best_fund.length === 0) {
+                        best_fund[0] = this.funds[i];
+                    }
+                    else if (this.funds[i].getStores().length < best_fund[0].getStores().length) {
+                        best_fund[0] = this.funds[i];
+                    }
+                    else if (this.funds[i].getStores().length === best_fund[0].getStores().length && this.funds[i].getAmount() >= best_fund[0].getAmount()) {
+                        best_fund[0] = this.funds[i];
+                    }
+                }
+            }
+            if (best_fund.length === 0) {
+                return false;
+            }
+            best_fund[0].addExpense(expense);
+            return true;
         }
-        return fund.getAmount() >= expense.getAmount() && fund.getStores().indexOf(expense.getStore()) >= 0;
     }
 
     updateTables() {

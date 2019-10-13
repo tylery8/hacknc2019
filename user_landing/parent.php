@@ -49,7 +49,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!--====== Title ======-->
-    <title>Safe Wallet</title>
+    <title><?php echo $_SESSION['first'];?> - Safe Wallet</title>
 
     <!--====== Favicon Icon ======-->
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
@@ -68,6 +68,15 @@
 
     <!--====== Style css ======-->
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- <link rel="stylesheet" href="assets/css/modal.css"> -->
+
+    <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css'> -->
+
+
+
+    <!-- <link rel="stylesheet" href="add_funds/funds.css"> -->
+
 </head>
 
 <body>
@@ -149,6 +158,9 @@
             </div> <!-- row -->
 
 
+
+            
+
             <?php 
 
                 //loop through all dependents
@@ -173,19 +185,21 @@
                         <div class="pricing text-center" style="z-index: 99;">
                             <h5 class="sub-title" style="z-index: 99;"><?php echo $user_row['first']. " ". $user_row['last'];?></h5>
                         </br>
-                            <h5 class="sub-title" style="z-index: 99;"> <?php echo $row['amount'];?></h5>
+                            <h5 class="sub-title" style="z-index: 99;"> $<?php echo $row['amount'];?></h5>
                         </br>
-                            <h5 class="sub-title" style="z-index: 99;"><?php echo $row['stores'];?></h5>
+                            <h5 class="sub-title" style="z-index: 99;">Allowed Stores: <?php echo $row['stores'];?></h5>
                         </div>
                         <div class="pricing-list">
                             
                         </div>
                         <div class="pricing-btn text-center">
-                            <a class="main-btn" href="#">ADD FUNDS</a>
+                            <a class="main-btn" href="add_funds.php?request_id=<?php echo $row['id'];?>" target="_blank">ADD FUNDS</a>
                         </div>
+
                         <div align="center">
                             <p class="main-btn" href="#">DECLINE</p>
                         </div>
+
                     </div> <!-- single pricing -->
                 </div>
             </div> <!-- row -->
@@ -193,8 +207,6 @@
             <?php
                 }
             ?>
-
-
 
         </div>
     </section>
