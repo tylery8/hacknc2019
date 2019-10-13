@@ -62,6 +62,7 @@
     <!--====== Title ======-->
     <title><?php echo $user_row['first']; ?> - Safe Wallet</title>
 
+    <link rel="stylesheet" href="assets/css/LineIcons.css">
     <!--====== Favicon Icon ======-->
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/png">
 
@@ -332,7 +333,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright text-center">
-                            <p class="text">Template Crafted by Big Baller Analytics</p>
+                            <p class="text">Template Crafted by Big Baller Analytics - Template Crafted by UIdeck</p>
                         </div>
                     </div>
                 </div> <!-- row -->

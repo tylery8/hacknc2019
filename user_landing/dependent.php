@@ -335,7 +335,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright text-center">
-                            <p class="text">Template Crafted by Big Baller Analytics</p>
+                            <p class="text">Template Crafted by Big Baller Analytics - Template Crafted by UIdeck</p>
                         </div>
                     </div>
                 </div> <!-- row -->
