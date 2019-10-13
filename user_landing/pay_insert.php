@@ -90,6 +90,9 @@ while ($amount > 0 && $totalpossible >= $amount) {
                 $numRows = mysqli_num_rows($result);
         
                 $fund_row = mysqli_fetch_array($result);
+
+                $new_expense = $fund_row['expenses']."(".$store.","."$amount".")";
+
                 if ($fund_row['amount']>=$amount){
                     $new_amount = $fund_row['amount'] - $amount;
                     $amount = 0;
@@ -103,9 +106,6 @@ while ($amount > 0 && $totalpossible >= $amount) {
                         WHERE id = '$fund_row[id]' ";
                 $result = mysqli_query($conn, $sql);
 
-
-                $new_expense = $fund_row['expenses']."(".$store.","."$amount".")";
-
                 $sql ="UPDATE fund
                         SET expenses = '$new_expense'
                         WHERE id = '$fund_row[id]' ";
@@ -113,7 +113,7 @@ while ($amount > 0 && $totalpossible >= $amount) {
 
                 $sql ="DELETE FROM fund WHERE amount = '0'";
                 $result = mysqli_query($conn, $sql);
-                
+
                 $approved = true;
         
             }
