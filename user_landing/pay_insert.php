@@ -122,10 +122,17 @@ while ($amount > 0 && $totalpossible >= $amount) {
         }
     }
 }
+
+if($approved==false) {
+    echo '<script> alert("Invalid Payment"); window.location.href=\'dependent.php\'; </script>';
+    exit();
+}
 $sql ="DELETE FROM fund WHERE amount = '0'";
 $result = mysqli_query($conn, $sql);
 
 
 echo $approved;
+header("Location: dependent.php");
+exit();
 
 ?>
